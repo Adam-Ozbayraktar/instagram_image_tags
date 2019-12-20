@@ -19,8 +19,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  double varOpacity = 0.7;
-  bool toggleVar = false;
+  double varOpacity = 0;
+  bool toggleVar = true;
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Stack(
                 children: <Widget>[
                   Positioned(
-                    top: 561,
+                    top: 510,
                     left: 17,
                     child: Icon(
                       MdiIcons.circle,
@@ -114,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   Positioned(
-                    top: 560,
+                    top: 510,
                     left: 15,
                     child: Icon(
                       Icons.account_circle,
