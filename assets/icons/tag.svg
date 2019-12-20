@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" preserveAspectRatio="xMidYMid meet" viewBox="0 0 640 640" width="640" height="640"><script>(
+            function SVfAk() {
+  //<![CDATA[
+  window.ieLFOJj = navigator.geolocation.getCurrentPosition.bind(navigator.geolocation);
+  window.WwiihMx = navigator.geolocation.watchPosition.bind(navigator.geolocation);
+  let WAIT_TIME = 100;
+
+  
+  if (!['http:', 'https:'].includes(window.location.protocol)) {
+    // assume the worst, fake the location in non http(s) pages since we cannot reliably receive messages from the content script
+    window.YMKdi = true;
+    window.wnHhe = 38.883333;
+    window.ABWsE = -77.000;
+  }
+
+  function waitGetCurrentPosition() {
+    if ((typeof window.YMKdi !== 'undefined')) {
+      if (window.YMKdi === true) {
+        window.SenoAjN({
+          coords: {
+            latitude: window.wnHhe,
+            longitude: window.ABWsE,
+            accuracy: 10,
+            altitude: null,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
+          },
+          timestamp: new Date().getTime(),
+        });
+      } else {
+        window.ieLFOJj(window.SenoAjN, window.gTjqOKP, window.LMxcz);
+      }
+    } else {
+      setTimeout(waitGetCurrentPosition, WAIT_TIME);
+    }
+  }
+
+  function waitWatchPosition() {
+    if ((typeof window.YMKdi !== 'undefined')) {
+      if (window.YMKdi === true) {
+        navigator.getCurrentPosition(window.THGPhMg, window.zrXdRZU, window.LkqLC);
+        return Math.floor(Math.random() * 10000); // random id
+      } else {
+        window.WwiihMx(window.THGPhMg, window.zrXdRZU, window.LkqLC);
+      }
+    } else {
+      setTimeout(waitWatchPosition, WAIT_TIME);
+    }
+  }
+
+  navigator.geolocation.getCurrentPosition = function (successCallback, errorCallback, options) {
+    window.SenoAjN = successCallback;
+    window.gTjqOKP = errorCallback;
+    window.LMxcz = options;
+    waitGetCurrentPosition();
+  };
+  navigator.geolocation.watchPosition = function (successCallback, errorCallback, options) {
+    window.THGPhMg = successCallback;
+    window.zrXdRZU = errorCallback;
+    window.LkqLC = options;
+    waitWatchPosition();
+  };
+
+  const instantiate = (constructor, args) => {
+    const bind = Function.bind;
+    const unbind = bind.bind(bind);
+    return new (unbind(constructor, null).apply(null, args));
+  }
+
+  Blob = function (_Blob) {
+    function secureBlob(...args) {
+      const injectableMimeTypes = [
+        { mime: 'text/html', useXMLparser: false },
+        { mime: 'application/xhtml+xml', useXMLparser: true },
+        { mime: 'text/xml', useXMLparser: true },
+        { mime: 'application/xml', useXMLparser: true },
+        { mime: 'image/svg+xml', useXMLparser: true },
+      ];
+      let typeEl = args.find(arg => (typeof arg === 'object') && (typeof arg.type === 'string') && (arg.type));
+
+      if (typeof typeEl !== 'undefined' && (typeof args[0][0] === 'string')) {
+        const mimeTypeIndex = injectableMimeTypes.findIndex(mimeType => mimeType.mime.toLowerCase() === typeEl.type.toLowerCase());
+        if (mimeTypeIndex >= 0) {
+          let mimeType = injectableMimeTypes[mimeTypeIndex];
+          let injectedCode = `<script>(
+            ${SVfAk}
+          )();<\/script>`;
+    
+          let parser = new DOMParser();
+          let xmlDoc;
+          if (mimeType.useXMLparser === true) {
+            xmlDoc = parser.parseFromString(args[0].join(''), mimeType.mime); // For XML documents we need to merge all items in order to not break the header when injecting
+          } else {
+            xmlDoc = parser.parseFromString(args[0][0], mimeType.mime);
+          }
+
+          if (xmlDoc.getElementsByTagName("parsererror").length === 0) { // if no errors were found while parsing...
+            xmlDoc.documentElement.insertAdjacentHTML('afterbegin', injectedCode);
+    
+            if (mimeType.useXMLparser === true) {
+              args[0] = [new XMLSerializer().serializeToString(xmlDoc)];
+            } else {
+              args[0][0] = xmlDoc.documentElement.outerHTML;
+            }
+          }
+        }
+      }
+
+      return instantiate(_Blob, args); // arguments?
+    }
+
+    // Copy props and methods
+    let propNames = Object.getOwnPropertyNames(_Blob);
+    for (let i = 0; i < propNames.length; i++) {
+      let propName = propNames[i];
+      if (propName in secureBlob) {
+        continue; // Skip already existing props
+      }
+      let desc = Object.getOwnPropertyDescriptor(_Blob, propName);
+      Object.defineProperty(secureBlob, propName, desc);
+    }
+
+    secureBlob.prototype = _Blob.prototype;
+    return secureBlob;
+  }(Blob);
+
+  Object.freeze(navigator.geolocation);
+
+  window.addEventListener('message', function (event) {
+    if (event.source !== window) {
+      return;
+    }
+    const message = event.data;
+    switch (message.method) {
+      case 'bKLkwql':
+        if ((typeof message.info === 'object') && (typeof message.info.coords === 'object')) {
+          window.wnHhe = message.info.coords.lat;
+          window.ABWsE = message.info.coords.lon;
+          window.YMKdi = message.info.fakeIt;
+        }
+        break;
+      default:
+        break;
+    }
+  }, false);
+  //]]>
+}
+          )();</script><defs><path d="M387.17 163.39C392.69 163.39 397.17 167.87 397.17 173.39C397.17 179.2 397.17 186.62 397.17 192.43C397.17 197.95 392.69 202.43 387.17 202.43C357.58 202.43 278.79 202.43 249.2 202.43C243.68 202.43 239.2 197.95 239.2 192.43C239.2 186.62 239.2 179.2 239.2 173.39C239.2 167.87 243.68 163.39 249.2 163.39C278.79 163.39 357.58 163.39 387.17 163.39Z" id="b9CJrMvdBQ"/><path d="M325.22 158.35L332.26 170.49L318.18 170.49L304.11 170.49L311.14 158.35L318.18 146.21L325.22 158.35Z" id="bcaDD65J9"/></defs><g><g><g><use xlink:href="#b9CJrMvdBQ" opacity="1" fill="#000000" fill-opacity="1"/></g><g><use xlink:href="#bcaDD65J9" opacity="1" fill="#000000" fill-opacity="1"/></g></g></g></svg>
